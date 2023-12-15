@@ -26,6 +26,7 @@ class ResponseError(BaseModel):
     error_code: int
     description: str
 
+
 firebase = pyrebase.initialize_app(fireBaseConfig)
 auth = firebase.auth()
 db = firebase.database()
@@ -43,12 +44,4 @@ app.add_middleware(
 @app.get("/", response_model=ResponseOK | ResponseError)
 async def get_data():
     some_data = db.reference(f'/users').get()
-    for data in some_data.each():
-
-
-
-    #ec = some_data[0]
-    #tds = some_data[1]
-    #ec = ec.json()
-
     return {"ok": True, "result": some_data}
